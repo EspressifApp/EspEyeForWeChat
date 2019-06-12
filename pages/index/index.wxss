@@ -1,0 +1,41 @@
+/**index.wxss**/
+page {
+  height: calc(100% - 25px);
+  overflow: auto;
+}
+.item {
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+.item-img {
+  flex: 0 0 88rpx;
+  height: 88rpx;
+  border:1px solid #eee;
+  font-size: 26px;
+  color:  #109ec3;
+}
+.add-wrapper {
+  margin-top: 20px;
+  text-align: center;
+}
+.add-desc {
+  margin-top: 22px;
+  font-size: 12px;
+  color: #858585;
+}
+.add-plus {
+  width: 130rpx;
+	height: 130rpx;
+  line-height: 130rpx;
+  text-align: center;
+	border-radius: 100%;
+	background: #fff;
+	margin: 22px auto;
+	font-size: 28px;
+	color: #fff;
+  background: #109ec3;
+}
+.add-title {
+  font-size: 16px;
+  font-weight: 700;
+}

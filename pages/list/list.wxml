@@ -1,0 +1,29 @@
+<view class="container">
+<checkbox-group bindchange="checkboxChange">
+<view class="item" wx:for="{{faceList}}" wx:key="item">
+  <text>{{item}}</text>
+  <checkbox hidden="{{!isEdit}}" value="{{item}}"/>
+</view>
+</checkbox-group>
+<view class="footer">
+  <view class="footer-wrapper">
+    <view hidden="{{isEdit}}" catchtap='edit' class="footer-info">
+      <text class="iconfont icon-edit"></text>
+      <text>编辑</text>
+    </view>
+    <view catchtap='deleteFaces' hidden="{{!isEdit}}" class="footer-info">
+      <text class="iconfont icon-delete"></text>
+      <text>删除</text>
+    </view>
+    <view catchtap="deleteAll" class="footer-info">
+      <text class="iconfont icon-clear"></text>
+      <text>清空</text>
+    </view>
+    <view hidden="{{!isEdit}}" catchtap="cancelEdit" class="footer-info">
+      <text class="iconfont icon-cancel"></text>
+      <text>取消</text>
+    </view>
+  </view>
+  
+</view>
+</view>

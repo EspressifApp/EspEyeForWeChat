@@ -1,0 +1,76 @@
+<view class="container">
+  <view class="video-wrapper">
+    <view class="video-dashed">
+      <view class="video-frame bg-color">
+        <text class="iconfont icon-iconmulu icon-top-left"></text>
+        <text class="iconfont icon-iconmulu icon-top-right"></text>
+        <text class="iconfont icon-iconmulu icon-bottom-left"></text>
+        <text class="iconfont icon-iconmulu icon-bottom-right"></text>
+        <view hidden="{{!isStart}}" class="horizontal-line flex flex-ac">
+          <view class="line"></view>
+        </view>
+        <view catchtap="showStart" class="start-stop flex flex-ac flex-jcc">
+          <view hidden="{{operateStart}}" class="icon-operate">
+          <view catchtap="start" hidden="{{!isStart}}"  class="img">
+            <text  class="iconfont icon-start "></text>
+          </view>
+          <view catchtap="stop" hidden="{{isStart}}" class="img">
+            <text class="iconfont icon-stop"></text>
+          </view>
+            
+            
+          </view>
+        </view>
+        <image hidden="{{!isStart}}" class="img" src="../../images/bg.png"></image>
+        <image hidden="{{isStart}}" class="img" src="{{imgSrc}}"></image>
+      </view>
+    </view>
+  </view>
+  <view class="operate-wrapper flex flex-wrap">
+    <view class="operate flex-1 flex flex-ac flex-v">
+      <view catchtap="detection" class="operate-info {{isDetection ? 'operate-active' : ''}}">
+        <image hidden="{{isDetection}}" src="../../images/face-detection.png" class="img"></image>
+        <image hidden="{{!isDetection}}" src="../../images/face-detection-active.png" class="img"></image>
+      </view>
+      <text class="flex-1 operate-text">人脸检测</text>
+    </view>
+    <view class="operate flex-1 flex flex-ac flex-v">
+      <view catchtap="recognition" class="operate-info {{isRecognition ? 'operate-active' : ''}}">
+        <image  hidden="{{isRecognition}}" src="../../images/face-recognition.png" class="img"></image>
+        <image  hidden="{{!isRecognition}}" src="../../images/face-recognition-active.png" class="img"></image>
+      </view>
+      <text class="flex-1 operate-text">人脸识别</text>
+    </view>
+    <view class="operate flex-1 flex flex-ac flex-v">
+      <view catchtap="entry" class="operate-info {{isSelectEntry ? 'operate-active' : ''}} {{!isRecognition ? 'operate-gray' : ''}}">
+        <image hidden="{{isSelectEntry}}" src="../../images/enter-face.png" class="img"></image>
+        <image hidden="{{!isSelectEntry}}" src="../../images/enter-face-active.png" class="img"></image>
+      </view>
+      <text class="flex-1 operate-text">录入人脸</text>
+    </view>
+    <view class="operate flex-1 flex flex-ac flex-v">
+      <view catchtap="searchFace" class="operate-info">
+        <image src="../../images/record-video.png" class="img"></image>
+      </view>
+      <text class="flex-1 operate-text">人脸查询</text>
+    </view>
+  </view>
+</view>
+<view hidden="{{isEntry}}" class="entry-wrapper">
+  <view catchtap="hideEntry" class="mask"></view>
+  <view class="entry-info">
+    <view catchtap="showModel" class="entry-item">ESP-EYE</view>
+    <view catchtap="hideEntry" class="entry-item">取消</view>
+  </view>
+</view>
+<view hidden="{{hiddenModal}}" class="entry-wrapper">
+  <view catchtap="hiddenModal" class="mask"></view>
+  <view class="modal-dialog">
+    <view class='modal-title'>请输入ID名称</view> 
+        <input type='text' bindinput='bindViewInput' value="{{faceId}}"  placeholder="只支持数字和英文字母"/>  
+        <view class='modal-btn-wrapper'>
+          <view class='cancel-btn' style='color:rgba(7,17,27,0.6)' bindtap='hideModel'>取消</view>
+          <view class='confirm-btn' style='color:#109ec3' bindtap='entryFace'>确定</view>
+    </view>
+  </view>
+</view>

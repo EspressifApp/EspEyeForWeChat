@@ -1,0 +1,11 @@
+/* pages/blueDevices/blueDevices.wxss */
+page {
+  height: calc(100% - 25px);
+  overflow: auto;
+}
+.prompt-title {
+  height: 50rpx;
+  border-top: 1px solid #999;
+  border-bottom: 1px solid #999;
+  width: 100%;
+}

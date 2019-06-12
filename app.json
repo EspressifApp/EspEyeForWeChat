@@ -1,0 +1,17 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/operate/operate",
+    "pages/blueDevices/blueDevices",
+    "pages/blueWifi/blueWifi",
+    "pages/blueConnect/blueConnect",
+    "pages/list/list"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#109ec3",
+    "navigationBarTitleText": "ESP-EYE DEMO",
+    "navigationBarTextStyle": "white"
+  },
+  "sitemapLocation": "sitemap.json"
+}

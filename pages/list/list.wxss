@@ -1,0 +1,66 @@
+.container {
+  height: 100%;
+  min-width: 100%;
+  box-sizing: border-box;
+}
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  width: 100%;
+  height: 56px;
+  border-bottom: 1px solid #c8caca;
+  box-sizing: border-box;
+}
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 56px;
+  border-top: 1px solid #c8caca;
+  box-shadow: 0px 0px 2px #c8caca;
+}
+.footer-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+.footer-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 12px;
+  color: #656b79;
+}
+.iconfont {
+  font-size: 18px;
+}
+/*  重写 checkbox 样式  */
+/* 未选中的 背景样式 */
+checkbox .wx-checkbox-input{
+   border-radius: 50%;/* 圆角 */
+   width: 50rpx; /* 背景的宽 */
+   height: 50rpx; /* 背景的高 */
+}
+/* 选中后的 背景样式 （红色背景 无边框 可根据UI需求自己修改） */
+checkbox .wx-checkbox-input.wx-checkbox-input-checked{
+   border-color: #109ec3;
+   background: #109ec3;
+}
+/* 选中后的 对勾样式 （白色对勾 可根据UI需求自己修改） */
+checkbox .wx-checkbox-input.wx-checkbox-input-checked::before{
+   border-radius: 50%;/* 圆角 */
+   width: 50rpx;/* 选中后对勾大小，不要超过背景的尺寸 */
+   height: 50rpx;/* 选中后对勾大小，不要超过背景的尺寸 */
+   line-height: 50rpx;
+   text-align: center;
+   font-size:40rpx; /* 对勾大小 30rpx */
+   color:#fff; /* 对勾颜色 白色 */
+   background: transparent;
+   transform:translate(-50%, -50%) scale(1);
+   -webkit-transform:translate(-50%, -50%) scale(1);
+}

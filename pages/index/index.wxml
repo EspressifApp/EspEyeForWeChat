@@ -1,0 +1,19 @@
+<!--index.wxml-->
+<view class="container">
+  <view catchtap='bindViewStream' data-value="{{item.ip}}"  wx:for="{{deviceList}}" class="item" wx:key="*this">
+    <view class="item-img">
+      <text class="iconfont icon-chip"></text>
+    </view>
+    <view class="item-name">
+      <text class="text-name">{{item.serviceName}}</text>
+      <text class="text-rssi">IP: {{item.ip}}</text>
+    </view>
+  </view>
+  <view class="add-wrapper">
+    <!-- <view hidden='{{!showAdd}}' class="add-title">添加设备</view>
+    <view hidden='{{!showAdd}}' class="add-desc">所有添加的智能设备将集中显示在这个列表</view> -->
+    <view hidden='{{!showAdd}}' class="add-plus" catchtap="addDevice">
+        <text class="iconfont icon-plus"></text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,64 @@
+/**app.wxss**/
+@import "/fonts/iconfont.wxss";
+page {
+  height: 100%;
+  overflow: hidden;
+}
+.flex {
+  display: flex;
+}
+.flex-jcc {
+  justify-content: center;
+}
+.flex-ac {
+  align-items: center;
+}
+.flex-wrap {
+  flex-wrap: wrap;
+}
+.flex-v {
+  flex-direction: column;
+}
+.flex-1 {
+  flex: 1;
+}
+.item {
+  display: flex;
+  height: 140rpx;
+  width: 100%;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+}
+.item-img {
+  flex: 0 0 120rpx;
+  height: 120rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+}
+.bluetooth-img {
+  height: 80rpx;
+  width: 80rpx;
+}
+.item-name {
+  flex: 1;
+  padding-left: 10px;
+  display: flex;
+  flex-direction: column;
+  font-size: 32rpx;
+}
+.text-rssi {
+  font-size: 28rpx;
+  color: #999;
+}
+.btn {
+  width: 100%;
+  height: 90rpx;
+  line-height: 90rpx;
+  background: #109ec3;
+  border: none;
+  margin-bottom: 30rpx;
+  font-size: 14px;
+  color: #fff;
+}

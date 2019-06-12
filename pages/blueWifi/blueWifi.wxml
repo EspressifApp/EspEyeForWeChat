@@ -1,0 +1,17 @@
+<view class="container">
+  <view class='header-wrapper'>
+    <image class="header-image" src="../../images/network.png" mode="aspectFit"></image>
+  </view>
+  <view class='content-wrapper'>
+    <view class="section-input">
+      <view class="title-desc">当前WiFi:</view>
+      <input class='form-input disabled' disabled="true" placeholder="" value='{{wifiInfo.SSID}}'/>
+    </view>
+    <view class="section-input">
+      <input bindinput="bindKeyInput" class='form-input' placeholder-class="placeholder" value='{{password}}'  placeholder="输入密码"/>
+    </view>
+    <view class="section-btn">
+      <button bindtap='bindViewConnect' class="btn">下一步</button>
+    </view>
+  </view>
+</view>
