@@ -8,6 +8,7 @@ const timeOut = 20;//超时时间
 var timeId = "";
 var sequenceControl = 0;
 var sequenceNumber = -1;
+var client = "";
 Page({
   data: {
     failure: false,
@@ -26,9 +27,9 @@ Page({
     serviceId: "",
     password: "",
     meshId: "",
-    client: "",
     processList: [],
     result: [],
+    isSuccess: false
   },
   blueConnect: function (event) {
     var self = this;
@@ -114,10 +115,7 @@ Page({
   //通知设备交互方式（是否加密）
   notifyDevice: function (deviceId, serviceId, characteristicId) {
     var self = this;
-    var client = util.blueDH(util.DH_P, util.DH_G, crypto);
-    self.setData({
-      client: client
-    });
+    client = util.blueDH(util.DH_P, util.DH_G, crypto);
     var kBytes = util.uint8ArrayToArray(client.getPublicKey());
     var pBytes = util.hexByInt(util.DH_P);
     var gBytes = util.hexByInt(util.DH_G);
@@ -137,13 +135,13 @@ Page({
       characteristicId: characteristicId,
       value: typedArray.buffer,
       success: function (res) {
-        self.getSecret(deviceId, serviceId, characteristicId, client, kBytes, pBytes, gBytes, null);
+        self.getSecret(deviceId, serviceId, characteristicId, kBytes, pBytes, gBytes, null);
       },
       fail: function (res) {
       }
     })
   },
-  getSecret: function (deviceId, serviceId, characteristicId, client, kBytes, pBytes, gBytes, data) {
+  getSecret: function (deviceId, serviceId, characteristicId, kBytes, pBytes, gBytes, data) {
     var self = this, obj = [], frameControl = 0;
     sequenceControl = parseInt(sequenceControl) + 1;
     if (!util._isEmpty(data)) {
@@ -182,7 +180,7 @@ Page({
       value: typedArray.buffer,
       success: function (res) {
         if (obj.flag) {
-          self.getSecret(deviceId, serviceId, characteristicId, client, kBytes, pBytes, gBytes, obj.laveData);
+          self.getSecret(deviceId, serviceId, characteristicId, kBytes, pBytes, gBytes, obj.laveData);
         } else {
           setTimeout(function () {
             self.writeDeviceStart(deviceId, serviceId, characteristicId, null);
@@ -234,7 +232,7 @@ Page({
       obj = util.isSubcontractor(data, self.data.isChecksum, sequenceControl, self.data.isEncrypt);
       frameControl = util.getFrameCTRLValue(self.data.isEncrypt, self.data.isChecksum, util.DIRECTION_OUTPUT, false, obj.flag);
     } else {
-      var ssidData = self.getCharCodeat(self.data.ssid);
+      var ssidData = util.toUTF8(self.data.ssid);
       obj = util.isSubcontractor(ssidData, self.data.isChecksum, sequenceControl, self.data.isEncrypt);
       frameControl = util.getFrameCTRLValue(self.data.isEncrypt, self.data.isChecksum, util.DIRECTION_OUTPUT, false, obj.flag);
     }
@@ -267,7 +265,7 @@ Page({
       obj = util.isSubcontractor(data, self.data.isChecksum, sequenceControl, self.data.isEncrypt);
       frameControl = util.getFrameCTRLValue(self.data.isEncrypt, self.data.isChecksum, util.DIRECTION_OUTPUT, false, obj.flag);
     } else {
-      var pwdData = self.getCharCodeat(self.data.password);
+      var pwdData = util.toUTF8(self.data.password);
       obj = util.isSubcontractor(pwdData, self.data.isChecksum, sequenceControl, self.data.isEncrypt);
       frameControl = util.getFrameCTRLValue(self.data.isEncrypt, self.data.isChecksum, util.DIRECTION_OUTPUT, false, obj.flag);
     }
@@ -361,25 +359,21 @@ Page({
     }
     return list;
   },
-  getCharCodeat: function (str) {
-    var list = [];
-    for (var i = 0; i < str.length; i++) {
-      list.push(str.charCodeAt(i));
-    }
-    return list;
-  },
   setProcess: function(value, desc) {
     var self = this, list = [];
     list = self.data.processList;
-    list.push(desc);
-    self.setData({
-      value: value,
-      processList: list
-    });
+    if (self.data.value <= value) {
+      list.push(desc);
+      self.setData({
+        value: value,
+        processList: list
+      });
+    }
     if (value == 100) {
       self.closeConnect();
       self.setData({
-        desc: util.descSucList[6]
+        desc: util.descSucList[6],
+        isSuccess: true
       });
       clearInterval(timeId);
       sequenceControl = 0;
@@ -398,14 +392,16 @@ Page({
   },
   setFailProcess: function (flag, desc) {
     var self = this, list = [];
-    list = self.data.processList;
-    list.push(desc);
-    self.setFailBg();
-    self.setData({
-      failure: flag,
-      processList: list,
-      desc: desc,
-    });
+    if (!self.data.isSuccess) {
+      list = self.data.processList;
+      list.push(desc);
+      self.setFailBg();
+      self.setData({
+        failure: flag,
+        processList: list,
+        desc: desc,
+      });
+    }
   },
   getResultType: function (list) {
     var self = this;
@@ -465,7 +461,7 @@ Page({
           }
         } else if (subType == util.SUBTYPE_NEGOTIATION_NEG) {
           var arr = util.hexByInt(result.join(""));
-          var clientSecret = self.data.client.computeSecret(new Uint8Array(arr));
+          var clientSecret = client.computeSecret(new Uint8Array(arr));
           var md5Key = md5.array(clientSecret);
           app.globalData.md5Key = md5Key;
           self.setData({
@@ -473,11 +469,9 @@ Page({
           })
           self.writeDeviceStart(self.data.deviceId, self.data.serviceId, self.data.uuid, null);
         } else {
-          console.log(468);
           self.setFailProcess(true, util.descFailList[4])
         }
       } else {
-        console.log(472);
         self.setFailProcess(true, util.descFailList[4])
       }
     }
@@ -559,6 +553,7 @@ Page({
       deviceId: options.deviceId,
       ssid: unescape(options.ssid),
       password: unescape(options.password),
+      isSuccess: false
     })
     sequenceControl = options.sequenceControl;
     self.blueConnect();
